@@ -29,7 +29,7 @@
 				{% for i in products %}
 				<div class="col-md-3">
 					<div class="card card-product-grid">
-						<a href="{{i.get_url}}" class="img-wrap"> <img src="{{i.images.url}}"> </a>
+						<a href="{{i.get_url}}" class="img-wrap"> <img src="{{i.images.url}}"></a>
 						<figcaption class="info-wrap">
 							<h4>{{i.product_name}}</h4>
 								<a href="{{i.get_url}}" class="title">{{i.description|slice:":32"}}</a>

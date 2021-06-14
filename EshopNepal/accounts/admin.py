@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 class AccountAdmin(UserAdmin):
     # Display setup in admin panel
-    list_display = ('email','first_name','last_name','last_login','is_active','date_joined')
+    list_display = ('email','first_name','last_name')
     filter_horizontal =()
     list_filter = ()
     fieldsets = ()
