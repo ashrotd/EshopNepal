@@ -1,5 +1,6 @@
 
 from django import urls
+import django
 import store
 from EshopNepal.settings import MEDIA_ROOT
 from django.contrib import admin
@@ -13,4 +14,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('store/', include('store.urls')),
     path('cart/', include('cart.urls')),
+    path('account/', include('accounts.urls')),
 ] + static(settings.MEDIA_URL, document_root = MEDIA_ROOT)
