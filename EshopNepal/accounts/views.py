@@ -1,10 +1,14 @@
 from django.contrib import messages, auth
+from django.http.request import QueryDict
 from accounts.models import Account
 from django.contrib.auth.decorators import login_required
 from django import http
 from django.http.response import HttpResponse
+import requests
 from django.shortcuts import redirect, render
 from .forms import RegisterForm
+from cart.models import Cart, CartItem
+from cart.views import _sessionId
 
 #email imports
 from django.contrib.sites.shortcuts import get_current_site
@@ -50,15 +54,64 @@ def register(request):
     return render(request, 'accounts/register.html',context)
 
 def login(request):
+      
     if request.method == 'POST':
         email = request.POST['email']   
         password = request.POST['password']
 
         user = auth.authenticate(email=email, password=password)
-        if user is not None:
-            auth.login(request, user)   
-            #messages.success(request,'Logged in !!!') 
-            return redirect('home')
+        if user is not None:  
+            try:
+                cart = Cart.objects.get(cart_id = _sessionId(request))
+                cart_exists = CartItem.objects.filter(cart=cart).exists()
+                if cart_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+                    # Getting Product Variation by cart-id
+                    product_variation = []
+                    for i in cart_item:
+                        variation = i.variations.all()
+                        product_variation.append(list(variation))
+
+                    # excess cartitem from user
+                    cart_item = CartItem.objects.filter(user=user)
+                    existing_list = []
+                    id = []
+                    for i in cart_item:
+                        existing_variation = i.variations.all()
+                        existing_list.append(list(existing_variation))
+                        id.append(i.id)
+                    
+                    for p in product_variation:
+                        if p in existing_list:
+                            index = existing_list.index(p)
+                            item_id = id[index]
+                            item = CartItem.objects.get(id=item_id)
+                            item.quantity += 1
+                            item.user = user
+                            item.save()
+                        else:
+                            cart_item = CartItem.objects.filter(cart=cart)
+                            for item in cart_item:
+                                item.user = user
+                                item.save()
+                    # for i in cart_item:
+                    #    i.user = user
+                    #    i.save() 
+            except:
+                pass
+            auth.login(request, user)
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                print('query ->',query)
+                # Django given url of login required : next=/cart/checkout/ 
+                split_param = dict(x.split('=') for x in query.split('&'))
+                print(split_param)
+                if 'next' in split_param:
+                    goto_page =  split_param['next']
+                    return redirect(goto_page)
+            except:
+                return redirect('home')            
         else:
             messages.error(request, 'Invalid Email or Password')    
             return redirect('login')
