@@ -122,7 +122,7 @@
                         <p class="text-center mb-3">
                             <img src="{% static 'images/misc/payments.png' %}" height="26">
                         </p>
-                        <a href="{% url 'checkout' %}" class="btn btn-primary btn-block mb-3"> Cash on Delivery </a>
+                        <button class="btn btn-primary btn-block mb-3" onclick="cash_on_delivery()"> Cash on Delivery </button>
                         <div id="paypal-button-container"></div>
 
                     </div> <!-- card-body.// -->
@@ -138,6 +138,8 @@
 </section>
 
 <script>
+    
+
     function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -155,7 +157,7 @@
 }
 
     var amount = `{{ grand_total }}`
-    var url = `{% url 'payment' %}`
+    var url = `{% url 'paypal_payment' %}`
     const csrftoken = getCookie('csrftoken');
     var orderID = `{{order.order_number}}`
     // Render the PayPal button into #paypal-button-container
@@ -198,5 +200,20 @@
 
 
     }).render('#paypal-button-container');
+
+    function cash_on_delivery(){
+        var urls = `{% url 'cod' %}`
+        fetch(urls, {
+                        method : "POST",
+                        headers : {
+                            "Content-type":"application/json",
+                            "X-CSRFToken":csrftoken,
+                        },
+                        body: JSON.stringify({
+                            orderID : orderID,
+                        })
+                    })
+        alert('Thank You, Check your email for Order Details !!!')
+    }
 </script>
 {% endblock body %}

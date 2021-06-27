@@ -1,0 +1,19 @@
+{% autoescape off %}
+Hi {{user.first_name}},
+
+Your Order Has Been Received !!!!
+
+Order Number : {{order.order_number}}
+
+Some Details:
+Ordered Date : {{order.created_date}}
+Total : {{order.order_total}}
+Payment Method : {{order.payment}}
+City : {{order.city}}
+state : {{order.state}}
+Country : {{order.country}}
+Expected Delivery Date : {{date}}
+Payment Method : {{order.payment}}
+
+If you think, not u ignore the email
+{% endautoescape %}
