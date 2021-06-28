@@ -197,22 +197,40 @@ def place_order(request, total =0, quantity=0):
 def order_complete(request):
     order_number = request.GET.get('order_number')
     transID = request.GET.get('paymentID')
-    print(transID)
-    try:
-        order = Order.objects.get(order_number=order_number, is_ordered=True)
-        order_items = OrderItem.objects.filter(order_id=order.id)
-        payment = Payment.objects.get(payment_id=transID)
-        sub_total = 0
-        for i in order_items:
-            sub_total += i.product_price
-        context = {
-            'order':order,
-            'payment':payment,
-            'order_items':order_items,
-            'order_number':order.order_number,
-            'sub_total':sub_total,
-            'transID':payment.payment_id,
-        }
-        return render(request, 'orders/order_complete.html', context)
-    except (Payment.DoesNotExist, Order.DoesNotExist):
-        return redirect('home')
+    if transID != 'COD':
+        try:
+            order = Order.objects.get(order_number=order_number, is_ordered=True)
+            order_items = OrderItem.objects.filter(order_id=order.id)
+            payment = Payment.objects.get(payment_id=transID)
+            sub_total = 0
+            for i in order_items:
+                sub_total += i.product_price
+            context = {
+                'order':order,
+                'payment':payment.status,
+                'order_items':order_items,
+                'order_number':order.order_number,
+                'sub_total':sub_total,
+                'transID':payment.payment_id,
+            }
+            return render(request, 'orders/order_complete.html', context)
+        except (Payment.DoesNotExist, Order.DoesNotExist):
+            return redirect('home')
+    else:
+        try:
+            order = Order.objects.get(order_number=order_number, is_ordered=True)
+            order_items = OrderItem.objects.filter(order_id=order.id)
+            sub_total = 0
+            for i in order_items:
+                sub_total += i.product_price
+            context = {
+                'order':order,
+                'payment':'Completed by COD',
+                'order_items':order_items,
+                'order_number':order.order_number,
+                'sub_total':sub_total,
+                'transID':'COD',
+            }
+            return render(request, 'orders/order_complete.html', context)
+        except (Payment.DoesNotExist, Order.DoesNotExist):
+            return redirect('home')
