@@ -34,6 +34,14 @@
 							<h4>{{i.product_name}}</h4>
 								<a href="{{i.get_url}}" class="title">{{i.description|slice:":32"}}</a>
 							<div class="price mt-1">Rs {{i.price}}</div>
+							<span style="color: #ffb503;">
+							
+								<i class="fas fa-star{% if i.AverageRating < 0.5 %}-o{% elif i.AverageRating >= 0.5 and i.AverageRating < 1 %}-half-alt{% endif %}" aria-hidden="true"></i>
+								<i class="fas fa-star{% if i.AverageRating < 1.5 %}-o{% elif i.AverageRating >= 1.5 and i.AverageRating < 2 %}-half-alt{% endif %}" aria-hidden="true"></i>
+								<i class="fas fa-star{% if i.AverageRating < 2.5 %}-o{% elif i.AverageRating >= 2.5 and i.AverageRating < 3 %}-half-alt{% endif %}" aria-hidden="true"></i>
+								<i class="fas fa-star{% if i.AverageRating < 3.5 %}-o{% elif i.AverageRating >= 3.5 and i.AverageRating < 4 %}-half-alt{% endif %}" aria-hidden="true"></i>
+								<i class="fas fa-star{% if i.AverageRating < 4.5 %}-o{% elif i.AverageRating >= 4.5 and i.AverageRating < 5 %}-half-alt{% endif %}" aria-hidden="true"></i>
+							</span>
 						</figcaption>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 from django.core import paginator
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Product, Category
+from .models import Product, Category, ProductGallery
 from cart.models import CartItem, Cart
 from django.db.models import Q
 from django.contrib import messages
@@ -43,11 +43,13 @@ def product_detail(request, product_slug, category_slug):
         raise e
 
     reviews = ReviewSystem.objects.filter(product_id=single_product.id, status=True)
-
+    # Get Image Gallery
+    gallery = ProductGallery.objects.filter(product_id=single_product.id)
     context = {
         'single_product':single_product,
         'in_cart':in_cart,
         'reviews':reviews,
+        'gallery':gallery,
     }
     return render(request, 'store/product_detail.html',context)
 

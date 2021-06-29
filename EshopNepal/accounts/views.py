@@ -6,6 +6,7 @@ from django import http
 from django.http.response import HttpResponse
 import requests
 from django.shortcuts import redirect, render
+from orders.models import Order, OrderItem
 from .forms import RegisterForm
 from cart.models import Cart, CartItem
 from cart.views import _sessionId
@@ -140,7 +141,15 @@ def activate(request, uidb64, token):
     
 @login_required(login_url='login')
 def dashboard(request):
-    return render(request,'accounts/dashboard.html')
+    user = Account.objects.get(id=request.user.id)
+    order = Order.objects.order_by('-created_date').filter(user_id=request.user.id, is_ordered=True)
+    orders_count = order.count()
+    context = {
+        'user':user,
+        'order':order,
+        'orders_count':orders_count,
+    }
+    return render(request,'accounts/dashboard.html',context)
 
 def forgotpassword(request):
     if request.method == 'POST':
@@ -199,4 +208,45 @@ def reset_password_page(request):
     
     else:
         return render(request,'accounts/reset_password_page.html')
-     
+@login_required(login_url='login')
+def my_orders(request):
+    order = Order.objects.filter(user_id=request.user.id, is_ordered=True).order_by('-created_date')
+    context = {
+        'order':order
+    }
+
+    return render(request,'accounts/my_order.html',context)
+
+@login_required(login_url='login')
+def edit_password(request):
+    if request.method == 'POST':
+        old_password = request.POST['Current_password']
+        new_password = request.POST['new_password']
+        confirm_password = request.POST['confirm_password']
+        user = Account.objects.get(username__exact=request.user.username)
+        if new_password == confirm_password:
+            success = user.check_password(old_password)
+            if success:
+                user.set_password(new_password)
+                user.save()
+                messages.success(request,'Password Changed Successfully !!!!')
+                return redirect('edit_password')
+            else:
+                messages.error(request,'Invalid Password !!! Try Again !!!')
+                return redirect('edit_password')
+        else:
+            messages.error(request,'Password Doesnot Match')
+    return render(request, 'accounts/edit_password.html')
+
+def order_details(request, order_id):
+    sub_total = 0
+    order_details = OrderItem.objects.filter(order__order_number=order_id)
+    for i in order_details:
+        sub_total += i.product_price * i.quantity
+    order = Order.objects.get(order_number=order_id)
+    context = {
+        'order_details':order_details,
+        'order':order,
+        'sub_total':sub_total,
+    }
+    return render(request,'accounts/order_details.html',context)

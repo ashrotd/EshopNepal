@@ -13,24 +13,40 @@
 		</header>
 		<div class="card-body">
 			<div class="row"> 
-				<div class="col-md-6">
+				<div class="col-md-12">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">Total Orders :</h5>
+							<h5 class="card-title">My Orders :</h5>
 							<h4>{{orders_count}}</h4>
-							<a href="{% url 'my_orders' %}">View Orders</a>
+                            <div class="col-md-12">
+                            <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Order #</th>
+      <th scope="col">Billing Name</th>
+      <th scope="col">Order Total</th>
+      <th scope="col">Ordered Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in order %}
+    <tr>
+      <th scope="row"><a href="{% url 'order_details' i.order_number %}">{{i.order_number}}</a></th>
+      <td>{{i.full_name}}</td>
+    
+      <td>{{i.order_total}}</td>
+      <td>{{i.created_date}}</td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 						</div>
 					</div>
+						</div>
+					</div>
+                    
 				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">{{user.first_name}} {{user.last_name}}</h4>
-							<p class="mb-0">{{user.email}}</p>
-							<p>{{user.phone_number}}</p>
-							<a href="{% url 'store' %}">View Products</a>
-						</div>
-					</div>
 				</div>
 			</div> <!-- row.// -->
 		</div> <!-- card-body .// -->
