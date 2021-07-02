@@ -1,1 +1,1 @@
-web: gunicorn EshopNepal.wsgi --log-file -
+web: gunicorn EshopNepal.wsgi
