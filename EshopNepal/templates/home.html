@@ -4,50 +4,120 @@
 {% block body %}
 
 <body>
-
-
-	<!-- ========================= SECTION MAIN ========================= -->
-	<section class="section-intro padding-y-sm">
-		<div class="container">
-
-			<div class="intro-banner-wrap">
-				<img src="{% static 'images/banners/cover.jpg'%}" class="img-fluid rounded">
+	<div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+	<div class="banner header-text">
+		<div class="owl-banner owl-carousel">
+		  <div class="banner-item-01">
+			<div class="text-content">
+			  <h4>Best Offer</h4>
+			  <h2>New Arrivals On Sale</h2>
 			</div>
-
+		  </div>
+		  <div class="banner-item-02">
+			<div class="text-content">
+			  <h4>Flash Deals</h4>
+			  <h2>Get your best products</h2>
+			</div>
+		  </div>
+		  <div class="banner-item-03">
+			<div class="text-content">
+			  <h4>Last Minute</h4>
+			  <h2>Grab last minute deals</h2>
+			</div>
+		  </div>
 		</div>
-	</section>
-	<section class="section-name padding-y-sm">
+	  </div>
+	  <!-- Banner Ends Here -->
+  
+	  <div class="latest-products">
 		<div class="container">
-
-			<header class="section-heading">
-				<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">See all</a>
-				<h3 class="section-title">Popular products</h3>
-			</header>
-
-
-			<div class="row">
-				{% for i in products %}
-				<div class="col-md-3">
-					<div class="card card-product-grid">
-						<a href="{{i.get_url}}" class="img-wrap"> <img src="{{i.images.url}}"></a>
-						<figcaption class="info-wrap">
-							<h4>{{i.product_name}}</h4>
-								<a href="{{i.get_url}}" class="title">{{i.description|slice:":32"}}</a>
-							<div class="price mt-1">Rs {{i.price}}</div>
-							<span style="color: #ffb503;">
-							
-								<i class="fas fa-star{% if i.AverageRating < 0.5 %}-o{% elif i.AverageRating >= 0.5 and i.AverageRating < 1 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if i.AverageRating < 1.5 %}-o{% elif i.AverageRating >= 1.5 and i.AverageRating < 2 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if i.AverageRating < 2.5 %}-o{% elif i.AverageRating >= 2.5 and i.AverageRating < 3 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if i.AverageRating < 3.5 %}-o{% elif i.AverageRating >= 3.5 and i.AverageRating < 4 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if i.AverageRating < 4.5 %}-o{% elif i.AverageRating >= 4.5 and i.AverageRating < 5 %}-half-alt{% endif %}" aria-hidden="true"></i>
-							</span>
-						</figcaption>
-					</div>
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="section-heading">
+				<h2>Latest Products</h2>
+				<a href="products.html">view all products <i class="fa fa-angle-right"></i></a>
+			  </div>
+			</div>
+			{% for i in products %}
+			<div class="col-md-4">
+			  <div class="product-item">
+				<a href="{{i.get_url}}"><img src="{{i.images.url}}" alt=""></a>
+				<div class="down-content">
+				  <a href="#"><h4>{{i.product_name}}</h4></a>
+				  <h6>{{i.price}}</h6>
+				  <p>{{i.description | slice:":50"}}...</p>
+				  <ul class="stars">
+                            <li><i class="fa fa-star{% if i.AverageRating < 0.5 %}-o{% elif i.AverageRating >= 0.5 and i.AverageRating < 1 %}-half-o{% endif %}" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star{% if i.AverageRating < 1.5 %}-o{% elif i.AverageRating >= 1.5 and i.AverageRating < 2 %}-half-o{% endif %}" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star{% if i.AverageRating < 2.5 %}-o{% elif i.AverageRating >= 2.5 and i.AverageRating < 3 %}-half-o{% endif %}" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star{% if i.AverageRating < 3.5 %}-o{% elif i.AverageRating >= 3.5 and i.AverageRating < 4 %}-half-o{% endif %}" aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star{% if i.AverageRating < 4.5 %}-o{% elif i.AverageRating >= 4.5 and i.AverageRating < 5 %}-half-o{% endif %}" aria-hidden="true"></i></li>
+                    </ul><span>Reviews ({{i.countReview}})</span>
 				</div>
-				{% endfor %}
+			  </div>
 			</div>
+			{% endfor %}
+		  </div>
 		</div>
-	</section>
+	  </div>
+  
+	  <div class="best-features">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="section-heading">
+				<h2>About Sixteen Clothing</h2>
+			  </div>
+			</div>
+			<div class="col-md-6">
+			  <div class="left-content">
+				<h4>Looking for the best products?</h4>
+				<p><a rel="nofollow" href="{% static 'https://templatemo.com/tm-546-sixteen-clothing' %}" target="_parent">This template</a> is free to use for your business websites. However, you have no permission to redistribute the downloadable ZIP file on any template collection website. <a rel="nofollow" href="https://templatemo.com/contact">Contact us</a> for more info.</p>
+				<ul class="featured-list">
+				  <li><a href="#">Lorem ipsum dolor sit amet</a></li>
+				  <li><a href="#">Consectetur an adipisicing elit</a></li>
+				  <li><a href="#">It aquecorporis nulla aspernatur</a></li>
+				  <li><a href="#">Corporis, omnis doloremque</a></li>
+				  <li><a href="#">Non cum id reprehenderit</a></li>
+				</ul>
+				<a href="about.html" class="filled-button">Read More</a>
+			  </div>
+			</div>
+			<div class="col-md-6">
+			  <div class="right-image">
+				<img src="{% static 'assets/images/feature-image.jpg' %}" alt="">
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+  
+  
+	  <div class="call-to-action">
+		<div class="container">
+		  <div class="row">
+			<div class="col-md-12">
+			  <div class="inner-content">
+				<div class="row">
+				  <div class="col-md-8">
+					<h4>Creative &amp; Unique <em>Sixteen</em> Products</h4>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque corporis amet elite author nulla.</p>
+				  </div>
+				  <div class="col-md-4">
+					<a href="#" class="filled-button">Purchase Now</a>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  </div>
+  
 </body>
 {% endblock body %}

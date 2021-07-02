@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
-<section class="section-conten padding-y bg">
+<section class="section-conten padding-y bg mt-3">
 
 <div class="container">
 	<div class="row">
@@ -8,18 +8,18 @@
 	<main class="col-md-9">
 		<article class="card">
 		<header class="card-header">
-			<strong class="d-inline-block mr-3">Signed In as :</strong>
-			<span>{{user.full_name}}</span>
+			<strong class="d-inline-block mr-3">Account :</strong>
+			<span>{{request.user.first_name}} {{request.user.last_name}}</span>
 		</header>
 		<div class="card-body">
 			<div class="row"> 
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-body">
-							<h5 class="card-title">My Orders :</h5>
+							
 							<h4>{{orders_count}}</h4>
                             <div class="col-md-12">
-                            <table class="table table-hover">
+                            <table class="table table-hover" style="margin: -20px;">
   <thead>
     <tr>
       <th scope="col">Order #</th>

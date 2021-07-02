@@ -3,140 +3,95 @@
 {% block title %}Cart{% endblock title %}
 {% block body %}
 <section class="section-content padding-y bg">
-    <div class="container">
+	<div class="container">
+    <div class="row">
 
-        <h4 class="text-center mb-4">Order Summary</h4>
-        <div class="row">
+        <div class="col-md-10 col-11 mx-auto">
+            <div class="row mt-5 gx-3">
+                <!--Left Side div-->
+                <div class="col-md-12 col-lg-6 col-11 mx-auto main_cart mb-lg-0 mb-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Billing Address</h5>
+                            <h6 class="card-text">{{order.full_name}}</h6>
+                            <ul>
+                                <li>{{order.email}}</li>
+                                <li>{{order.phone_number}}</li>
+                                <li>{{order.address}}</li>
+                                <li>{{order.city}}, {{order.state}}, {{order.country}}</li>
+                            </ul>
+                            {% if order.order_note %}
+                            <b>Note : </b> {{order.order_note}}
+                            {% endif %}
+                        </div>
+                    </div> 
+                        </div>
+                    </div> <!-- card.// -->
 
-            <aside class="col-lg-8">
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Billing Address</h5>
-                        <h6 class="card-text">{{order.full_name}}</h6>
-                        <ul>
-                            <li>{{order.email}}</li>
-                            <li>{{order.phone_number}}</li>
-                            <li>{{order.address}}</li>
-                            <li>{{order.city}}, {{order.state}}, {{order.country}}</li>
-                        </ul>
-                        {% if order.order_note %}
-                        <b>Note : </b> {{order.order_note}}
-                        {% endif %}
+                </div>
+                <div class="col-md-12 col 11 col-lg-6 mx-auto mt-md-5 mt-lg-0">
+                    <div class="card p-4 mb-3">
+                        <div class="row">
+                            <div class="col-md-8 col-8 justify-content-end">
+                                <h2 class="py-4 font-weight-bold"><b>Ordered Items</b></h2>
+                            </div>
+                        </div>
+                        <div class="row" id="items">
+                            {% for i in cart_items %}
+                            <!--Cart Images-->
+                            <div
+                                class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center product_image">
+                                <a href="{{i.product.get_url}}"><img  src="{{i.product.images.url}}"
+                                        class="img-fluid"></a>
+                            </div>
+                            <!-- Image Details -->
+                            <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                                <!-- product name -->
+                                <div class="row">
+                                    <div class="col-md-6 col-11 card-title">
+                                        <h1 class="mb-4 product_name"><b>{{i.product.product_name}}</b></h1>
+                                        <p class="text-muted small">
+                                            {% if i.variations.all %}
+                                            {% for j in i.variations.all %}
+                                            {{j.variation_category | capfirst}} : {{j.variation_value | capfirst}}
+                                            <br>
+                                            {% endfor %}
+                                            {% endif %}
+                                            Quantity : {{i.quantity}}
+                                        </p>
+                                    </div>
+                                    <!-- Quantity Increment/Decrement -->
+                                    <div class="col-md-6 col-11 mb-3">
+                                        <h4>Rs {{i.sub_total}}</h4>
+                                        <small class="text-muted">Rs {{i.product.price}} each</small>
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                            <hr>
+                            {% endfor %}
+                            <h4 class="mb-2"><b>Grand Total</b> : {{grand_total}}</h4>
+                            
+                            <p class="text-center mb-3">
+                                <img src="{% static 'assets/images/payments.png' %}" height="26">
+                            </p>
+                            <button class="btn btn-primary btn-block mb-3" onclick="cash_on_delivery()"> Cash on Delivery
+                            </button>
+                            <div id="paypal-button-container"></div>
+                        </div>
+                        
                     </div>
-                </div> <!-- card.// -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Payment Method</h5>
-                        <p class="card-text">Cash on Delivery</p>
-                        <p class="card-text">PayPal</p>
+                </div>
+            </div>
 
-                    </div>
-                </div> <!-- card.// -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Product Review</h5>
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col">Product</th>
-                                    <th scope="col" width="120">Quantity</th>
-                                    <th scope="col" width="120">Price</th>
-                                    <th scope="col" class="text-right" width="200"> </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for i in cart_items %}
-                                <tr>
-                                    <td>
-                                        <figure class="itemside align-items-center">
-                                            <div class="aside"><img src="{{i.product.images.url}}" class="img-sm"></div>
-                                            <figcaption class="info">
-                                                <a href="{{i.product.get_url}}"
-                                                    class="title text-dark">{{i.product.product_name}}</a>
-                                                <p class="text-muted small">
-                                                    {% if i.variations.all %}
-                                                    {% for j in i.variations.all %}
-                                                    {{j.variation_category}}: {{j.variation_value}}
-                                                    <br>
-                                                    {% endfor %}
-                                                    {% endif %}
-                                                </p>
-                                            </figcaption>
-                                        </figure>
-                                    </td>
-                                    <td>
-                                        <!-- col.// -->
-                                        <div class="col">
-                                            <div class="input-group input-spinner">
-                                                <div class="input-group-prepend">
-                                                </div>
-                                                <p class="text-center mx-auto">{{i.quantity}}</p>
-                                                <div class="input-group-append">
-                                                    <form action="{% url 'add_cart' i.product.id %}" method="POST">
-                                                        {% csrf_token %}
-                                                        {% for j in i.variations.all %}
-                                                        <input type="hidden" name="{{j.variation_category | lower}}"
-                                                            value="{{j.variation_value | capfirst}}">
-                                                        {% endfor %}
+        </div>
 
-                                                    </form>
-                                                </div>
-                                            </div> <!-- input-group.// -->
-                                        </div> <!-- col.// -->
-                                    </td>
-                                    <td>
-                                        <div class="price-wrap">
-                                            <var class="price">Rs {{i.sub_total}}</var>
-                                            <small class="text-muted">Rs {{i.product.price}} each</small>
-
-                                        </div> <!-- price-wrap .// -->
-                                    </td>
-
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div> <!-- card.// -->
-
-            </aside> <!-- col.// -->
-            <aside class="col-lg-4">
-
-                <div class="card">
-                    <div class="card-body">
-                        <dl class="dlist-align">
-                            <dt>Total price:</dt>
-                            <dd class="text-right">Rs {{total}}</dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt>Tax:</dt>
-                            <dd class="text-right">13 %</dd>
-                        </dl>
-                        <dl class="dlist-align">
-                            <dt>Total:</dt>
-                            <dd class="text-right text-dark b"><strong>Rs {{grand_total}}</strong></dd>
-                        </dl>
-                        <hr>
-                        <p class="text-center mb-3">
-                            <img src="{% static 'images/misc/payments.png' %}" height="26">
-                        </p>
-                        <button class="btn btn-primary btn-block mb-3" onclick="cash_on_delivery()"> Cash on Delivery
-                        </button>
-                        <div id="paypal-button-container"></div>
-
-                    </div> <!-- card-body.// -->
-                </div> <!-- card.// -->
-
-            </aside> <!-- col.// -->
-
-
-        </div> <!-- row.// -->
-        <!-- ============================ COMPONENT 1 END .// ================================= -->
-
-    </div> <!-- container .//  -->
+    </div>
+</div>
+</div> <!-- container .//  -->
 </section>
+
 
 <script>
 

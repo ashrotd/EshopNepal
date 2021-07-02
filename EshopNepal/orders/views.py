@@ -222,7 +222,7 @@ def order_complete(request):
             order_items = OrderItem.objects.filter(order_id=order.id)
             sub_total = 0
             for i in order_items:
-                sub_total += i.product_price
+                sub_total += i.product_price * i.quantity
             context = {
                 'order':order,
                 'payment':'Completed by COD',

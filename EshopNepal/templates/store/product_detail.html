@@ -2,42 +2,51 @@
 {% load static %}
 
 {% block body %}
-<section class="section-content padding-y bg">
+<section class="section-content mt-5 bg">
 	<div class="container">
 
 		<!-- ============================ COMPONENT 1 ================================= -->
 		<div class="card">
 			<div class="row no-gutters">
-				<aside class="col-md-6">
+				<aside class="col-md-6 col-11">
 					<article class="gallery-wrap">
-						<div class="img-big-wrap mainImage">
+						<div class="img-big-wrap mainImage col-11">
 							<center><img src="{{single_product.images.url}}"></center>
 						</div>
 					</article>
 					<ul class="thumb">
 						<li>
-							<a href="{{single_product.images.url}}" target="mainImage"><img src="{{single_product.images.url}}" alt=""></a>
+							<a href="{{single_product.images.url}}" target="mainImage"><img style="width: 80px;
+	height: 80px;
+	border: 1px solid grey;" src="{{single_product.images.url}}" alt=""></a>
 							{% for i in gallery %}
-							<a href="{{i.image.url}}" target="mainImage"><img src="{{i.image.url}}" alt=""></a>
+							<a href="{{i.image.url}}" target="mainImage"><img style="width: 80px;
+	height: 80px;
+	border: 1px solid grey;" src="{{i.image.url}}" alt=""></a>
 							{% endfor %}
 						</li>
 					</ul>
 				</aside>
-				<main class="col-md-6 border-left">
+				<main class="col-md-6 col-11 border-left">
 					<form action="{% url 'add_cart' single_product.id %}" method="POST">
 						{% csrf_token %}
 						<article class="content-body">
-							<h2 class="title">{{single_product.product_name}}</h2>
+							<h2 class="title mt-3" style="font-weight: bold;">{{single_product.product_name}}</h2>
 							<span style="color: #ffb503;">
-							
-								<i class="fas fa-star{% if single_product.AverageRating < 0.5 %}-o{% elif single_product.AverageRating >= 0.5 and single_product.AverageRating < 1 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if single_product.AverageRating < 1.5 %}-o{% elif single_product.AverageRating >= 1.5 and single_product.AverageRating < 2 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if single_product.AverageRating < 2.5 %}-o{% elif single_product.AverageRating >= 2.5 and single_product.AverageRating < 3 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if single_product.AverageRating < 3.5 %}-o{% elif single_product.AverageRating >= 3.5 and single_product.AverageRating < 4 %}-half-alt{% endif %}" aria-hidden="true"></i>
-								<i class="fas fa-star{% if single_product.AverageRating < 4.5 %}-o{% elif single_product.AverageRating >= 4.5 and single_product.AverageRating < 5 %}-half-alt{% endif %}" aria-hidden="true"></i>
+
+								<i class="fa fa-star{% if single_product.AverageRating < 0.5 %}-o{% elif single_product.AverageRating >= 0.5 and single_product.AverageRating < 1 %}-half-o{% endif %}"
+									aria-hidden="true"></i>
+								<i class="fa fa-star{% if single_product.AverageRating < 1.5 %}-o{% elif single_product.AverageRating >= 1.5 and single_product.AverageRating < 2 %}-half-o{% endif %}"
+									aria-hidden="true"></i>
+								<i class="fa fa-star{% if single_product.AverageRating < 2.5 %}-o{% elif single_product.AverageRating >= 2.5 and single_product.AverageRating < 3 %}-half-o{% endif %}"
+									aria-hidden="true"></i>
+								<i class="fa fa-star{% if single_product.AverageRating < 3.5 %}-o{% elif single_product.AverageRating >= 3.5 and single_product.AverageRating < 4 %}-half-o{% endif %}"
+									aria-hidden="true"></i>
+								<i class="fa fa-star{% if single_product.AverageRating < 4.5 %}-o{% elif single_product.AverageRating >= 4.5 and single_product.AverageRating < 5 %}-half-o{% endif %}"
+									aria-hidden="true"></i>
 							</span> <small>{{single_product.countReview}} Reviews</small>
 							<div class="mt-2 mb-3">
-								<var class="price h4">Rs {{single_product.price}}</var>
+								<var class="price h4" style="font-style: normal; font-family: Arial, Helvetica, sans-serif">Rs {{single_product.price}}</var>
 							</div>
 
 							<p>{{single_product.description}}</p>
@@ -45,8 +54,10 @@
 
 							<hr>
 							<div class="row">
-								<div class="item-option-select">
-									<h6>Choose Color</h6>
+								<div class="item-option-select" style=" margin-bottom: 1rem; width: 150px;
+								display: inline-block;
+								margin-right: 15px;">
+									<h6 class="mb-2">Choose Color</h6>
 									<select class="form-control" name="color" required>
 										<option value="" disabled selected>Select</option>
 										{% for i in single_product.variation_set.color %}
@@ -58,8 +69,10 @@
 								</div>
 							</div> <!-- row.// -->
 							<div class="row">
-								<div class="item-option-select">
-									<h6>Select Size</h6>
+								<div class="item-option-select" style=" margin-bottom: 1rem; width: 150px;
+								display: inline-block;
+								margin-right: 15px;">
+									<h6 class="mb-2">Select Size</h6>
 									<select class="form-control" name="size">
 										<option value="" disabled selected>Select</option>
 										{% for i in single_product.variation_set.size %}
@@ -73,7 +86,7 @@
 							{% if single_product.stock <= 0 %} <h5 class="text-danger">Out of Stock<h5>
 									{% else %}
 									<button type="submit" class="btn  btn-primary"> <span class="text">Add to
-											cart</span> <i class="fas fa-shopping-cart"></i> </button>
+											cart</span> <i class="fa fa-shopping-cart"></i> </button>
 
 									{% endif %}
 						</article>
@@ -125,7 +138,7 @@
 				<small><span><a href="{% url 'login' %}">Sign-in</a></span> to review the product</small>
 				{% endif %}
 				<header class="section-heading">
-					<h3>Customer Reviews </h3>
+					<h3 style="color: white; padding: 1.5rem;">Customer Reviews</h3>
 
 				</header>
 				{% for i in reviews %}
@@ -151,14 +164,14 @@
 						</div>
 					</div> <!-- icontext.// -->
 					<div class="mt-3">
-					<span style="color: #ffb503;">
-						<i class="fas fa-star{% if i.rating < 1 %}-o{% endif %}" aria-hidden="true"></i>
-						<i class="fas fa-star{% if i.rating < 2 %}-o{% endif %}" aria-hidden="true"></i>
-						<i class="fas fa-star{% if i.rating < 3 %}-o{% endif %}" aria-hidden="true"></i>
-						<i class="fas fa-star{% if i.rating < 4 %}-o{% endif %}" aria-hidden="true"></i>
-						<i class="fas fa-star{% if i.rating < 5 %}-o{% endif %}" aria-hidden="true"></i>
-					</span>
-					
+						<span style="color: #ffb503;">
+							<i class="fa fa-star{% if i.rating < 1 %}-o{% endif %}" aria-hidden="true"></i>
+							<i class="fa fa-star{% if i.rating < 2 %}-o{% endif %}" aria-hidden="true"></i>
+							<i class="fa fa-star{% if i.rating < 3 %}-o{% endif %}" aria-hidden="true"></i>
+							<i class="fa fa-star{% if i.rating < 4 %}-o{% endif %}" aria-hidden="true"></i>
+							<i class="fa fa-star{% if i.rating < 5 %}-o{% endif %}" aria-hidden="true"></i>
+						</span>
+
 						<h6>{{i.subject}}</h6>
 						<p>
 							{{i.review}}

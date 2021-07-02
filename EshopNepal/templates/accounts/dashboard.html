@@ -1,45 +1,62 @@
 {% extends 'base.html' %}
 {% block body %}
-<section class="section-conten padding-y bg">
+<section class="section-content padding-y bg">
+	<div class="container">
 
-<div class="container">
-	<div class="row">
-	{% include 'includes/dashboard_sidebar.html' %}
-	<main class="col-md-9">
-		<article class="card">
-		<header class="card-header">
-			<strong class="d-inline-block mr-3">Signed In as :</strong>
-			<span>{{user.full_name}}</span>
-		</header>
-		<div class="card-body">
-			<div class="row"> 
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<h5 class="card-title">Total Orders :</h5>
+
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-md-10 col-11 mx-auto">
+					<div class="row mt-5 gx-3">
+						<!--Left Side div-->
+						<div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-2">
+							<div class="card p-4 mb-3">
+
+								<div class="row">
+									<div class="col-md-8 col-8 justify-content-end">
+										<h2 class="py-4 font-weight-bold"><b>Account : {{user.first_name}} {{user.last_name}}</b></h2>
+									</div>
+								</div>
+								<div class="row" id="items">
+									<hr>
+									<h5 class="card-title">Total Orders :</h5>
 							<h4>{{orders_count}}</h4>
 							<a href="{% url 'my_orders' %}">View Orders</a>
+							<hr>
+									<h5 class="card-title">Email :</h5>
+							<h4>{{user.email}}</h4>
+							<hr>
+									<h5 class="card-title">Phone Number :</h5>
+							<h4>{{user.phone_number}}</h4>
+							
+								</div>
+
+							</div>
+							
+							
+						</div>
+						<div class="col-md-12 col 11 col-lg-4 mx-auto mt-3 md-3 mt-lg-0">
+							<div class="right_side p-3 shadow bg-white">
+								<ul class="list-group">
+									<a class="list-group-item {% if '/account/' == request.path %}active{% endif %}"
+										href="{% url 'dashboard' %}">Dashboard</a>
+									<a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}"
+										href="{% url 'my_orders' %}">My Orders</a>
+									<a class="list-group-item {% if '/account/edit_password/' == request.path %}active{% endif %}"
+										href="{% url 'edit_password' %}">Change Password</a>
+
+								</ul>
+								<br>
+								<a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i
+										class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
+
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<h4 class="card-title">{{user.first_name}} {{user.last_name}}</h4>
-							<p class="mb-0">{{user.email}}</p>
-							<p>{{user.phone_number}}</p>
-							<a href="{% url 'store' %}">View Products</a>
-						</div>
-					</div>
-				</div>
-			</div> <!-- row.// -->
-		</div> <!-- card-body .// -->
-		 <!-- table-responsive .end// -->
-		</article> <!-- order-group.// --> 
-	</main>
-</div> <!-- row.// -->
-</div>
 
+				</div>
 
+			</div>
 </section>
 {% endblock body %}
