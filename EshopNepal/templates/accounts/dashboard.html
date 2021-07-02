@@ -1,62 +1,119 @@
 {% extends 'base.html' %}
 {% block body %}
-<section class="section-content padding-y bg">
-	<div class="container">
 
-
-		<div class="container-fluid">
-			<div class="row">
-
-				<div class="col-md-10 col-11 mx-auto">
-					<div class="row mt-5 gx-3">
-						<!--Left Side div-->
-						<div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-2">
-							<div class="card p-4 mb-3">
-
-								<div class="row">
-									<div class="col-md-8 col-8 justify-content-end">
-										<h2 class="py-4 font-weight-bold"><b>Account : {{user.first_name}} {{user.last_name}}</b></h2>
-									</div>
+<body>
+		<div id="layoutSidenav_content">
+			<main>
+				<div class="container-fluid px-4">
+					<h1 class="mt-4">Dashboard</h1>
+					<ol class="breadcrumb mb-4">
+						<li class="breadcrumb-item active">Dashboard</li>
+					</ol>
+					<div class="row">
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-primary text-white mb-4">
+								<div class="card-body">Primary Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fa fa-angle-right"></i></div>
 								</div>
-								<div class="row" id="items">
-									<hr>
-									<h5 class="card-title">Total Orders :</h5>
-							<h4>{{orders_count}}</h4>
-							<a href="{% url 'my_orders' %}">View Orders</a>
-							<hr>
-									<h5 class="card-title">Email :</h5>
-							<h4>{{user.email}}</h4>
-							<hr>
-									<h5 class="card-title">Phone Number :</h5>
-							<h4>{{user.phone_number}}</h4>
-							
-								</div>
-
 							</div>
-							
-							
 						</div>
-						<div class="col-md-12 col 11 col-lg-4 mx-auto mt-3 md-3 mt-lg-0">
-							<div class="right_side p-3 shadow bg-white">
-								<ul class="list-group">
-									<a class="list-group-item {% if '/account/' == request.path %}active{% endif %}"
-										href="{% url 'dashboard' %}">Dashboard</a>
-									<a class="list-group-item {% if '/my_orders/' in request.path %}active{% endif %}"
-										href="{% url 'my_orders' %}">My Orders</a>
-									<a class="list-group-item {% if '/account/edit_password/' == request.path %}active{% endif %}"
-										href="{% url 'edit_password' %}">Change Password</a>
-
-								</ul>
-								<br>
-								<a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i
-										class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
-
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-warning text-white mb-4">
+								<div class="card-body">Warning Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fa fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-success text-white mb-4">
+								<div class="card-body">Success Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fa fa-angle-right"></i></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-danger text-white mb-4">
+								<div class="card-body">Danger Card</div>
+								<div class="card-footer d-flex align-items-center justify-content-between">
+									<a class="small text-white stretched-link" href="#">View Details</a>
+									<div class="small text-white"><i class="fa fa-angle-right"></i></div>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-xl-6">
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fa fa-chart-area me-1"></i>
+									Area Chart Example
+								</div>
+								<div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+							</div>
+						</div>
+						<div class="col-xl-6">
+							<div class="card mb-4">
+								<div class="card-header">
+									<i class="fa fa-chart-bar me-1"></i>
+									Bar Chart Example
+								</div>
+								<div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+							</div>
+						</div>
+					</div>
+					<div class="card mb-4">
+						<div class="card-header">
+							<i class="fa fa-table me-1"></i>
+							Order DataTable 
+						</div>
+						<div class="card-body">
+							<table class="table table-hover" style="margin: -20px;" id="datatablesSimple">
+								<thead>
+									<tr>
+										<th scope="col">Order #</th>
+										<th scope="col">Billing Name</th>
+										<th scope="col">Order Total</th>
+										<th scope="col">Ordered Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for i in order %}
+									<tr>
+										<th scope="row"><a
+												href="{% url 'order_details' i.order_number %}">{{i.order_number}}</a>
+										</th>
+										<td>{{i.full_name}}</td>
 
+										<td>{{i.order_total}}</td>
+										<td>{{i.created_date}}</td>
+
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
+			</main>
+			<footer class="py-4 bg-light mt-auto">
+				<div class="container-fluid px-4">
+					<div class="d-flex align-items-center justify-content-between small">
+						<div class="text-muted">Copyright &copy; Your Website 2021</div>
+						<div>
+							<a href="#">Privacy Policy</a>
+							&middot;
+							<a href="#">Terms &amp; Conditions</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
 
-			</div>
-</section>
-{% endblock body %}
+	{% endblock body %}
