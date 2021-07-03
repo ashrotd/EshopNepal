@@ -21,8 +21,7 @@
             <a class="nav-link" href="{% url 'store' %}">Our Products</a>
           </li>
           <li class="nav-item {% if '/store/wishlist/' == request.path %}active{% endif %}">
-            <a class="nav-link" href="{% url 'wishlist' %}">Wish List
-            </a>
+            <a class="nav-link text-center" href="{% url 'wishlist' %}"><i class="fa fa-heart" style="color: #f33f3f;"></i> Wish List</a>
           </li>
           <li class="nav-item {% if '/about/' == request.path %}active{% endif %}">
             <a class="nav-link" href="{% url 'about' %}">About Us</a>
