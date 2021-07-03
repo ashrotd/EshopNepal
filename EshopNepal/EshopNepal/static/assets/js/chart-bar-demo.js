@@ -4,10 +4,14 @@ Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Bar Chart Example
 var ctx = document.getElementById("myBarChart");
+var label = []
+`{% for i in order %}`
+label.push(`{{i.created_date}}`)
+`{% endfor %}`
 var myLineChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ["January", "February", "March", "April", "May", "June"],
+    labels: label,
     datasets: [{
       label: "Revenue",
       backgroundColor: "rgba(2,117,216,1)",
