@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-+-w#6maz)f&j74q85ii+@)=$jkq=zd=$ugz+jy_35v$l7739^v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','eshopnepal.herokuapp.com']
 
@@ -152,9 +152,8 @@ MESSAGE_TAGS = {
     
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'footcric07@gmail.com'
 EMAIL_HOST_PASSWORD = 'Ashrot@07'
+EMAIL_USE_TLS = True
