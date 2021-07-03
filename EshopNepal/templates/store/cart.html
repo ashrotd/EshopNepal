@@ -25,6 +25,7 @@
 
                         <div class="row">
                             <div class="col-md-8 col-8 justify-content-end">
+                                {% include 'includes/alerts.html' %}
                                 <h2 class="py-4 font-weight-bold"><b>Cart Item</b></h2>
                             </div>
                         </div>
@@ -78,7 +79,7 @@
                                         <a href="{% url 'remove_cart_item' i.product.id i.id %}">
                                             <p><i class="fa fa-trash-o"></i> Remove Items</p>
                                         </a>
-                                        <a href="{% url 'remove_cart_item' i.product.id i.id %}">
+                                        <a href="{% url 'wishlist_input' i.product.id %}">
                                         <p><i class="fa fa-heart"></i> Add to Wishlist</p></a>
                                         <h3>Rs <span>{{i.product.price}}</span></h3>
                                     </div>

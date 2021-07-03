@@ -8,6 +8,8 @@ from cart.views import _sessionId, cart
 from .forms import ReviewForm
 from .models import ReviewSystem
 from django.http import HttpResponse
+from .models import WishList
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 def store(request, category_slug=None):
@@ -85,3 +87,24 @@ def submit_review(request, product_id):
                 data.save()
                 messages.success(request,'Thank You for Reviewing !!!')
                 return redirect(url)
+@login_required(login_url='login')
+def wishlist_input(request,product_id):
+    url =request.META.get('HTTP_REFERER')
+    try:
+        wishlists = WishList.objects.get(user__id=request.user.id, wish_products__id=product_id)
+        messages.success(request,'Already added to WishList !!!')
+        return redirect('wishlist')
+    except WishList.DoesNotExist:
+        wish = WishList()
+        wish.wish_products_id = product_id
+        wish.user_id = request.user.id
+        wish.save()
+        messages.success(request,'Added to Wishlist !!!')
+        return redirect(url)
+
+def wishlist(request):
+    wishlist = WishList.objects.filter(user_id=request.user.id)
+    context = {
+        'wishlist':wishlist
+    }
+    return render(request,'store/wishlist.html',context)

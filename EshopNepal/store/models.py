@@ -92,3 +92,6 @@ class WishList(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE)
     wish_products = models.ForeignKey(Product, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.wish_products.product_name

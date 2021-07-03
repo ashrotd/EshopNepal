@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="latest-products">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="section-heading">
+                    {% include 'includes/alerts.html' %}
+						<h2>My Wishlist</h2>
+                        
+						<a href="{% url 'store' %}">view all products <i class="fa fa-angle-right"></i></a>
+					</div>
+				</div>
+				{% for i in wishlist %}
+				<div class="col-md-4">
+					<div class="product-item">
+						<a href="{{i.get_url}}"><img src="{{i.wish_products.images.url}}" alt=""></a>
+						<div class="down-content">
+							<a href="{{i.wish_products.get_url}}">
+								<h4>{{i.wish_products.product_name}}</h4>
+							</a>
+							<h6>{{i.wish_products.price}}</h6>
+							<p>{{i.wish_products.description | slice:":50"}}...</p>
+							<ul class="stars">
+								<li><i class="fa fa-star{% if i.wish_products.AverageRating < 0.5 %}-o{% elif i.wish_products.AverageRating >= 0.5 and i.wish_products.AverageRating < 1 %}-half-o{% endif %}"
+										aria-hidden="true"></i></li>
+								<li><i class="fa fa-star{% if i.wish_products.AverageRating < 1.5 %}-o{% elif i.wish_products.AverageRating >= 1.5 and i.wish_products.AverageRating < 2 %}-half-o{% endif %}"
+										aria-hidden="true"></i></li>
+								<li><i class="fa fa-star{% if i.wish_products.AverageRating < 2.5 %}-o{% elif i.wish_products.AverageRating >= 2.5 and i.wish_products.AverageRating < 3 %}-half-o{% endif %}"
+										aria-hidden="true"></i></li>
+								<li><i class="fa fa-star{% if i.wish_products.AverageRating < 3.5 %}-o{% elif i.wish_products.AverageRating >= 3.5 and i.wish_products.AverageRating < 4 %}-half-o{% endif %}"
+										aria-hidden="true"></i></li>
+								<li><i class="fa fa-star{% if i.wish_products.AverageRating < 4.5 %}-o{% elif i.wish_products.AverageRating >= 4.5 and i.wish_products.AverageRating < 5 %}-half-o{% endif %}"
+										aria-hidden="true"></i></li>
+							</ul><span>Reviews ({{i.wish_products.countReview}})</span>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+    {% include 'includes/sticky_cart.html' %}
+    {% endblock body %}

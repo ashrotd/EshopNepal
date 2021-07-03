@@ -1,0 +1,39 @@
+
+<style>
+		.badge:after {
+			content: attr(value);
+			font-size: 12px;
+			background: #f33f3f;
+			border-radius: 50%;
+			padding: 3px;
+			color: white;
+			position: relative;
+			left: -8px;
+			top: -10px;
+			opacity: 0.9;
+		}
+
+		.float {
+			position: fixed;
+			width: 60px;
+			height: 60px;
+			bottom: 40px;
+			right: 20px;
+			background: transparent;
+			color: black;
+
+			border-radius: 50px;
+			text-align: center;
+
+		}
+
+		.my-float {
+			margin-top: 22px;
+		}
+	</style>
+
+	<body>
+		<a href="{% url 'cart' %}" class="float">
+			<i class="fa badge" style="font-size:30px; padding: 15px; color: #f33f3f;" value={{cart_count}}>&#xf07a;</i>
+		</a>
+		
