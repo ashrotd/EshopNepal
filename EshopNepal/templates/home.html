@@ -140,12 +140,12 @@ opacity:0.9;
 	height:60px;
 	bottom:40px;
 	right:20px;
-	background-color:black;
-	color:white;
+	background: transparent;
+	color:black;
 	
 	border-radius:50px;
 	text-align:center;
-	box-shadow: 2px 2px 3px #999;
+	
 }
 .my-float{
 	margin-top:22px;
@@ -154,7 +154,7 @@ opacity:0.9;
 
 <body>
 <a href="{% url 'cart' %}" class="float">
-<i class="fa badge" style="font-size:30px; padding: 15px;" value={{cart_count}}>&#xf07a;</i>
+<i class="fa badge" style="font-size:30px; padding: 15px; color: black;" value={{cart_count}}>&#xf07a;</i>
 </a>
 
 </body>
