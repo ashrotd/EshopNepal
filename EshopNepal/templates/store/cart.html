@@ -10,14 +10,14 @@
 		<h2>Your Cart is Empty!</h2>
 		<a href="{% url 'store' %}" type="button" class="btn btn-primary my-3">Continue Shopping</a>
 		{% else %}
-		<div class="container-fluid">
+		<div class="">
     <div class="row">
 
-        <div class="col-md-10 col-11 mx-auto">
+        <div class="col-md-12 col-12 mx-auto">
             <div class="row mt-5 gx-3">
                 <!--Left Side div-->
-                <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5">
-                    <div class="card p-4 mb-3">
+                <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-2">
+                    <div class="card p-2 mb-3">
                         {% if not cart_items %}
                         <h2>Your Cart is Empty!</h2>
                         <a href="{% url 'store' %}" type="button" class="btn btn-primary my-3">Continue Shopping</a>
@@ -32,12 +32,12 @@
                             {% for i in cart_items %}
                             <!--Cart Images-->
                             <div
-                                class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center product_image">
+                                class="col-md-5 col-11 mx-auto mb-2 bg-light d-flex justify-content-center align-items-center product_image">
                                 <a href="{{i.product.get_url}}"><img src="{{i.product.images.url}}"
                                         class="img-fluid"></a>
                             </div>
                             <!-- Image Details -->
-                            <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+                            <div class="col-md-7 col-11 mx-auto mt-2">
                                 <!-- product name -->
                                 <div class="row">
                                     <div class="col-md-6 col-11 card-title">
@@ -52,7 +52,7 @@
                                         </p>
                                     </div>
                                     <!-- Quantity Increment/Decrement -->
-                                    <div class="col-md-6 col-11 mb-3">
+                                    <div class="col-md-6 col-6 mx-auto mb-4">
                                         <ul class="pagination justify-content-end set_quantity">
                                             <li class="page-item"><a class="page-link"
                                                     href="{% url 'remove_cart' i.product.id i.id %}"><i
@@ -74,11 +74,12 @@
                                 </div>
                                 <!-- Remove, wishlist & Price -->
                                 <div class="row">
-                                    <div class="col-12 d-flex justify-content-between remove_wish">
+                                    <div class="col-md-12 col-12 mb-3 d-flex justify-content-between remove_wish">
                                         <a href="{% url 'remove_cart_item' i.product.id i.id %}">
                                             <p><i class="fa fa-trash-o"></i> Remove Items</p>
                                         </a>
-                                        <p><i class="fa fa-heart"></i> Add to Wishlist</p>
+                                        <a href="{% url 'remove_cart_item' i.product.id i.id %}">
+                                        <p><i class="fa fa-heart"></i> Add to Wishlist</p></a>
                                         <h3>Rs <span>{{i.product.price}}</span></h3>
                                     </div>
                                 </div>
@@ -103,7 +104,7 @@
                             <p>13<span id="product_amount">%</span></p>
                         </div>
                         <hr>
-                        <div class="total_amount d-flex justify-content-between font-weight-bold mb-2">
+                        <div class="total_amount d-flex justify-content-between mb-4" style="font-weight: bold;">
                             <p>Grand Total : </p><br>
                             <p> Rs <span id="total_cart_amount"><b>{{total_tax}}</b></span></p>
                         </div>

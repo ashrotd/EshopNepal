@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from .models import Product
-from .models import ReviewSystem
+from .models import ReviewSystem, WishList
 from .models import Variation
 from .models import ProductGallery
 import admin_thumbnails
@@ -25,3 +25,4 @@ admin.site.register(Product,ProductAdmin)
 admin.site.register(Variation, VariationAdmin)
 admin.site.register(ReviewSystem)
 admin.site.register(ProductGallery)
+admin.site.register(WishList)
