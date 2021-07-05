@@ -1,5 +1,7 @@
+from store.views import wishlist
 from .models import Cart, CartItem
 from cart.views import _sessionId
+from store.models import WishList
 
 def counter(request):
     count =0
@@ -17,3 +19,13 @@ def counter(request):
         except Cart.DoesNotExist:
             count = 0
     return dict(cart_count = count)
+
+def wishlist_counter(request):
+    if 'admin' in request.path:
+        return {}
+    else:
+        wishlist = WishList.objects.filter(user__id=request.user.id)
+        if wishlist is not None:
+            wish_count = len(wishlist)
+
+    return dict(wish_count=wish_count)
