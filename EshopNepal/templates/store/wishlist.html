@@ -15,6 +15,7 @@
 				<div class="col-md-4">
 					<div class="product-item">
 						<a href="{{i.get_url}}"><img src="{{i.wish_products.images.url}}" alt=""></a>
+						 <a class="btn btn-sm btn-danger" style="position: absolute; margin-left: -65px;" href="{% url 'remove_wishlist' i.wish_products.id %}">Remove</a>
 						<div class="down-content">
 							<a href="{{i.wish_products.get_url}}">
 								<h4>{{i.wish_products.product_name}}</h4>
@@ -39,6 +40,7 @@
 				{% endfor %}
 			</div>
 		</div>
+	
 	</div>
     {% include 'includes/sticky_cart.html' %}
     {% endblock body %}

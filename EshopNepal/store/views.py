@@ -108,3 +108,9 @@ def wishlist(request):
         'wishlist':wishlist
     }
     return render(request,'store/wishlist.html',context)
+
+def remove_wishlist(request, product_id):
+    url =request.META.get('HTTP_REFERER')
+    wishlist = WishList.objects.get(user__id=request.user.id, wish_products__id=product_id)
+    wishlist.delete()
+    return redirect(url)

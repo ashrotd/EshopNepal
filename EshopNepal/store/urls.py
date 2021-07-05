@@ -10,5 +10,6 @@ urlpatterns = [
     path('search', views.search, name='search'),
     path('submit_review/<int:product_id>/',views.submit_review, name='submit_review'),
     path('wishlist_input/<int:product_id>/', views.wishlist_input, name='wishlist_input'),
-    path('wishlist/', views.wishlist, name='wishlist')
+    path('wishlist/', views.wishlist, name='wishlist'),
+    path('remove_wishlist/<int:product_id>/', views.remove_wishlist, name='remove_wishlist')
 ] 
