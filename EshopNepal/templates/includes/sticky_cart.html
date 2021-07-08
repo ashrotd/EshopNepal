@@ -1,6 +1,6 @@
 
 <style>
-		.badge:after {
+		#badge:after {
 			content: attr(value);
 			font-size: 12px;
 			background: #f33f3f;
@@ -36,47 +36,8 @@
 
 	
 		<a href="{% url 'cart' %}" class="float">
-			<i class="fa badge" style="font-size:30px; padding: 15px; color: #f33f3f;" value={{cart_count}}>&#xf290;</i>
+			<i class="fa fa-shopping-bag" id="badge" style="font-size:30px; padding: 15px; color: #f33f3f;" value={{cart_count}}></i>
 		</a>
 		
 
-		<style>
-			#badge1:after {
-				content: attr(value);
-				font-size: 12px;
-				background: #f33f3f;
-				border-radius: 50%;
-				padding: 3px;
-				color: white;
-				position: relative;
-				margin: 7px;
-				left: -8px;
-				top: 0px;
-				
-				opacity: 0.9;
-			}
-	
-			.float1 {
-				position: fixed;
-				width: 60px;
-				height: 100px;
-				bottom: 40px;
-				right: 20px;
-				background: transparent;
-				color: black;
-	
-				border-radius: 50px;
-				text-align: center;
-	
-			}
-	
-			.my-float {
-				margin-top: 22px;
-			}
-		</style>
-	
 		
-			<a href="{% url 'wishlist' %}" class="float1">
-				<i class="fa fa-heart" id="badge1" style="font-size:30px; padding: 15px; color: #f33f3f;" value={{wish_count}}></i>
-			</a>
-	
